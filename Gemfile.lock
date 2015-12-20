@@ -176,7 +176,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
-  cancancan (~> 1.10)
+  cancancan
   coffee-rails (~> 4.1.0)
   devise
   jbuilder (~> 2.0)
