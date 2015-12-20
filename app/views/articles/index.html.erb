@@ -21,8 +21,8 @@
     <tr>
       <td><%= article.title %></td>
       <td><%= article.text %></td>
-      <td><%= article.user %></td>
-      <% if current_user == article.user %>
+      <td><%= article.user.name %></td>
+      <% if current_user.id == article.user.id %>
       <td>
         <%= link_to 'Edit', edit_article_path(article) %>
       </td>
