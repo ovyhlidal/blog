@@ -48,4 +48,18 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :text)
   end
+
+
+  #<!--  <td><%= article.user.name %></td>
+  #    <% if current_user.id == article.user.id %>
+  #    <td>
+  #<%= link_to 'Edit', edit_article_path(article) %>
+  #    </td>
+  #    <td>
+  #      <%= link_to 'Destroy', article_path(article),
+  #                  method: :delete,
+  #                  data: { confirm: 'Are you sure?' } %>
+  #                  </td>
+  #    <% end %> -->
+
 end
