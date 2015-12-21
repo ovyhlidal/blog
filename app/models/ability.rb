@@ -34,8 +34,9 @@ class Ability
 
       # Define User abilities
       if user.is? :admin
-        can :manage, Article
+        can :manage, :all
       else
+        can :manage, Article, :user_id => user.id
         can :read, Article
       end
   end
