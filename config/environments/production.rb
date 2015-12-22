@@ -82,17 +82,26 @@ Rails.application.configure do
 
   config.action_mailer.default :charset => "utf-8"
 
+#  config.action_mailer.smtp_settings = {
+ #     :port      => 587,
+  #    :address    => "young-plateau-3753.herokuapp.com",
+   #   :user_name => ENV["MAILGUN_USERNAME"],
+    #  :password  => ENV["MAILGUN_PASSWORD"]
+  #}
+
   config.action_mailer.smtp_settings = {
-      :port      => 587,
-      :address    => "young-plateau-3753.herokuapp.com",
-      :user_name => ENV["MAILGUN_USERNAME"],
-      :password  => ENV["MAILGUN_PASSWORD"]
+      :port           => ENV['MAILGUN_SMTP_PORT'],
+      :address        => ENV['MAILGUN_SMTP_SERVER'],
+      :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+      :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+      :domain         => 'young-plateau-3753.herokuapp.com', #eg: 'yourappname.herokuapp.com'
+      :authentication => :plain,
   }
+
   config.action_mailer.default_url_options = { :host => 'https://young-plateau-3753.herokuapp.com/' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
-
 
 
 

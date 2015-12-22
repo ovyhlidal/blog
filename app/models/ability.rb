@@ -32,7 +32,7 @@ class Ability
 
       user ||= User.new
       # Define User abilities
-      if user.role? :super_admin
+      if user.abili :super_admin
         can :manage, :all
       elsif user.role? :user
         can :read, Article
@@ -53,6 +53,37 @@ class Ability
   # convinience method for format of role
   def role?(role)
     return !!self.roles.find_by_name(role.to_s.camelize)
+  end
+
+  def initialize user, options = {}
+    user ? user_rules : guest_user_rules
+  end
+
+  def user_rules
+    user.roles.each do |role|
+      exec_role_rules(role) if user.roles.include? role
+    end
+    default_rules
+  end
+
+  def exec_role_rules role
+    meth = :"#{role}_rules"
+    send(meth) if respond_to? meth
+  end
+
+
+
+  # various rules methods for each role
+  def admin_rules
+    can :manage, :all
+  end
+
+  def editor_rules
+    can :manage, [Article]
+  end
+
+  def default_rules
+    can :read, :all
   end
 
 end
