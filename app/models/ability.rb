@@ -31,13 +31,28 @@ class Ability
 
 
       user ||= User.new
-
       # Define User abilities
-      if user.is? :admin
+      if user.role? :super_admin
         can :manage, :all
-      else
-        can :manage, Article, :user_id => user.id
+      elsif user.role? :user
         can :read, Article
+        # manage products, assets he owns
+        can :manage, Article do |article|
+          article.try(:owner) == user
+        end
+
+     # else
+     #   can :manage, Article, :user_id => user.id
+     #   can :read, Article
+     # end
+
+
       end
   end
+
+  # convinience method for format of role
+  def role?(role)
+    return !!self.roles.find_by_name(role.to_s.camelize)
+  end
+
 end
