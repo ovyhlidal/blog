@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 
 gem 'cancancan'
+gem 'figaro'
 
 
 # Use ActiveModel has_secure_password
