@@ -29,41 +29,17 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-
-      user ||= User.new
-      # Define User abilities
-      if user.abili :super_admin
-        can :manage, :all
-      elsif user.role? :user
-        can :read, Article
-        # manage products, assets he owns
-        can :manage, Article do |article|
-          article.try(:owner) == user
-        end
-
-     # else
-     #   can :manage, Article, :user_id => user.id
-     #   can :read, Article
-     # end
-
-
-      end
-  end
-
-  # convinience method for format of role
-  def role?(role)
-    return !!self.roles.find_by_name(role.to_s.camelize)
-  end
-
-  def initialize user, options = {}
-    user ? user_rules : guest_user_rules
-  end
-
-  def user_rules
-    user.roles.each do |role|
-      exec_role_rules(role) if user.roles.include? role
+    user ||= User.new
+    if user.has_role? :admin
+      can :manage, :all
+    elsif user.has_role? :author
+      can :create, Status # author can create status
+      can :update, Status # author can update status
+      # can :destroy, Status # #uncomment this line, author can destroy status
+      can :read, :all
+    else
+      can :read, :all
     end
-    default_rules
   end
 
   def exec_role_rules role
